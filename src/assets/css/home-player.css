@@ -1,0 +1,258 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#player{
+    width: 100vw;
+    height: 0.6rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #232227;
+    border-top: 1px solid red;
+}
+
+#player-main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    
+    margin: 0 auto;
+}
+
+.left-control{
+    width: 1.2rem;
+    height: 0.6rem;
+    line-height: 0.6rem;
+    display: flex;
+    margin-right: 0.1rem;
+}
+
+.playIcon {
+    font-size: 36px;
+    opacity: 0.8;
+    margin: auto 0.1rem;
+}
+  
+.playIcon:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.prev-next-icon {
+    margin: auto 0;
+    font-size: 28px;
+    /* margin-right: 8px; */
+    opacity: 0.8;
+}
+
+.prev-next-icon:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.music-control{
+    width: 6rem;
+    height: 0.4rem;
+    
+    display: flex;
+    flex-direction: column;
+    /* background-color: aqua; */
+    margin: auto 0;
+}
+
+.musicInfo{
+    width: 100%;
+    height: 0.16rem;
+    margin-bottom: 0.1rem;
+    /* background-color: red; */
+    line-height: 0.16rem;
+    display: flex;
+    align-items: center;
+}
+
+.musicName{
+    text-align: left;
+    /* padding-left: 0.1rem; */
+    padding-right: 0.2rem; 
+    font-size: 0.14rem;
+    color: #ccc;
+}
+.author{
+    font-size: 0.12rem;
+    color: #999;
+}
+
+.progress-time{
+    width: 6rem;
+    display: flex;
+    align-content: center;
+}
+
+.progress{
+    margin: auto 0;
+    display: flex;
+    width: 5rem;
+    box-shadow: 1px 1px 1px #000;
+    background: #000;
+    height: 0.08rem;
+    border-radius: 0.05rem;
+    position: relative;
+}
+
+.progress-played{
+    /* 测试样例width */
+    width: 0;
+    background: #e11b22;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 0.08rem;
+    border-radius: 0.05rem;
+}
+
+.progress-item{
+    left: 0;
+    position: absolute;
+    /* left: -4px; */
+    top: -0.04rem;
+    height: 0.16rem;
+    width: 0.16rem;
+    z-index: 3;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.progress-item-inside{
+    position: relative;
+    background: #e11b22;
+    top: 0.04rem;
+    left: 0.04rem;
+    height: 0.08rem;
+    width: 0.08rem;
+    z-index: 4;
+    border-radius: 50%;
+}
+
+.time{
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 0.18rem;
+    width: 0.9rem;
+    height: 0.12rem;
+    line-height: 0.12rem;
+    font-size: 0.12rem;
+    color: #ccc;
+}
+
+.time-played{
+   
+   padding-right: 0.1rem;
+}
+
+.time-totle{
+    width: 0.4rem;
+    padding-left: 0.08rem; 
+}
+
+.right-control{
+    margin: auto 0.15rem;
+    padding-right: 0.05rem;
+    border-right: 2px solid #000;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 0.8rem;
+    height: 60%;
+    font-size: 0.2rem;
+}
+.icon-folder{
+    opacity: 0.8;
+}
+.icon-folder:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+.circulation{
+    opacity: 0.8;
+}
+.circulation:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+.volumeDiv{
+    margin: auto 0; 
+    padding-bottom: 0.01rem;
+    width: 0.3rem;
+    height: 0.3rem;
+    padding-top: 0.01rem;
+    font-size: 0.24rem;
+    position: relative;
+}
+
+.icon-volume{
+    opacity: 0.7;
+}
+.icon-volume:hover{
+   opacity: 1;
+   cursor: pointer;
+
+}
+
+.volume-control{
+    visibility: visible;
+    position: absolute;
+    top: -1.435rem;
+    left: 0;
+    width: 0.32rem;
+    height: 1.28rem;
+    background: #232227;
+    z-index: 1;
+}
+    
+.volume-progress{
+    position: absolute;
+    left: 0.14rem;
+    top: 0.15rem;
+    width: 0.04rem;
+    border-radius: 0.05rem;
+    height: 1rem;
+    background: #000;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.volume-current{
+    height: 0.5rem;
+    background-color: #e11b22;
+    position: absolute;
+    left: 0;
+    width: 0.04rem;
+    bottom: 0;
+}
+
+.volume-item{
+    width: 0.12rem;
+    height: 0.12rem;
+    border-radius: 0.06rem;
+    background-color: #fff;
+    position: absolute;
+    left: -0.04rem;
+    bottom: 0.44rem;
+    cursor: pointer;
+}
+
+.volume-item-inside{
+    width: 0.04rem;
+    height: 0.04rem;
+    background-color: #e11b22;
+    border-radius: 0.02rem;
+    position: absolute;
+    left: 0.04rem;
+    top: 0.04rem;
+    z-index: 2;
+}
+

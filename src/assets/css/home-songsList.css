@@ -1,0 +1,57 @@
+.main{
+    width: 100vw;
+    height: calc(100% - 1.2rem);
+    position: relative;
+    display: flex;
+    
+}
+.songsList{
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 1.8rem;
+    height: 100%;
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    /* padding-top: 0.1rem; */
+    border-right: 1px solid #666;
+}
+.createSongsList{
+    border-top: 1px solid #666;
+    display: flex;
+    padding: 0.05rem 0.15rem 0 0.15rem;   
+    height: 0.3rem;
+    line-height: 0.3rem; 
+    justify-content: space-between;
+}
+.createSongsList span{
+    color: #999;
+    font-size: 0.14rem;
+}
+.createSongsList img{
+    width: 0.16rem;
+    height: 0.16rem;
+    margin-top: 0.07rem;
+    /* margin: auto 0; */
+}
+
+
+
+/* 滚动条 */
+.songsList::-webkit-scrollbar {
+    width: 4px;    
+    /*height: 4px;*/
+}
+.songsList::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+}
+.songsList::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: #333;
+
+}
+
