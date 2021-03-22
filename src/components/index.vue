@@ -10,7 +10,7 @@
 import axios from "axios"
 import api from "../assets/config/api"
 export default {
-   //props:["message"],
+    props:["musicList"],
     methods: {
         showDetailMusic(){
             let userId = this.$store.getters.getUserId;

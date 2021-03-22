@@ -6,12 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: "",
-    isLogin: false,
+    isLogin: sessionStorage.getItem('isLogin')?sessionStorage.getItem('isLogin'):'',
     userName: "",
     userPassword: "",
     userEmail: "",
     userId: "",
-    userMusicList: "", //用户已上传的全部音乐
+    userMusicList: "", //用户自己创建的歌单
+    userAllMusic: "",//用户已上传的所有音乐
     isPause: true,
     musicName: "",
     musicSinger: "",
@@ -35,7 +36,7 @@ export default new Vuex.Store({
 
     setToken(state,token){
       state.token = token;
-      sessionStorage.token = token;
+      sessionStorage.setItem('token',token);
     },
     delToken(state){
       state.token = '';
@@ -44,7 +45,7 @@ export default new Vuex.Store({
 
     setIsLogin(state,status){
       state.isLogin = status;
-      sessionStorage.isLogin = status; //记录登录状态
+      sessionStorage.setItem('isLogin',status); //记录登录状态
     },
     delIsLogin(state){
       state.isLogin = false;
@@ -53,7 +54,7 @@ export default new Vuex.Store({
 
     setUserId(state,userId){
       state.userId = userId;
-      sessionStorage.userId = userId;
+      sessionStorage.setItem('userId',userId);
     },
     delUserId(state){
       state.userId = "";
@@ -62,7 +63,7 @@ export default new Vuex.Store({
 
     setUserName(state,userName){
       state.userName = userName;
-      sessionStorage.userName = userName; //记录用户名
+      sessionStorage.setItem('userName',userName); //记录用户名
     },
     delUserName(state){
       state.userName = "",
@@ -71,7 +72,7 @@ export default new Vuex.Store({
 
     setUserPassword(state,password){
       state.userPassword = password; 
-      sessionStorage.userPassword = password; //记录用户密码
+      sessionStorage.setItem('userPassword',password); //记录用户密码
     },
     delUserPassword(state){
       state.userPassword = "",
@@ -80,7 +81,7 @@ export default new Vuex.Store({
 
     setUserEmail(state,email){
       state.userEmail = email;
-      sessionStorage.userEmail = email; //记录用户邮箱
+      sessionStorage.setItem('userEmail',email); //记录用户邮箱
     },
     delUserEmail(state){
       state.userEmail = "";
@@ -98,6 +99,9 @@ export default new Vuex.Store({
     },
     setCurrentList(state,list){
       state.currentList = list;
+    },
+    setUserAllMusic(state,music){
+      state.userAllMusic = music;
     }
   },
   getters: {

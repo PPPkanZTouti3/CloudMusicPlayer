@@ -54,18 +54,7 @@ export default {
         showDialog(){
             this.isShowAdd = !this.isShowAdd;
         },
-        // async addToList(musicId,listId){
-        //     await axios.post(api.AddMusicToList,{
-        //         musicId: musicId,
-        //         musicListId: listId
-        //     })
-        //     .then(res=>{
-        //         console.log(res)
-        //     })
-        //     .catch(err=>{
-        //         console.log(err)
-        //     })
-        // },
+        
         falseShow(){
             console.log("hahahhahaah")
             this.isShowAdd = false;

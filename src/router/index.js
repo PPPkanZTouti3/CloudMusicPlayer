@@ -6,6 +6,7 @@ import Register from '@/views/Register.vue'
 import AccountSetting from '@/views/AccountSetting.vue'
 import FindPassword from '@/views/FindPassword'
 import Test from '@/views/Test'
+//import store from '../store'
 // import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -14,7 +15,18 @@ const routes = [{
     path: '/',
     name: 'Home',
     component: Home,
-    
+    // beforeEnter:(to,from,next)=>{
+    //   let isLogin = false;
+    //   next();
+    //   if(to.meta.requiresAuth&&isLogin){
+    //     next();
+    //   }else{
+    //     next("/login");
+    //   }
+    // },
+    // meta: {
+    //   requireAuth: true
+    // }
   },
   {
     path: '/about',
@@ -53,9 +65,11 @@ const routes = [{
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: '/cloudmusicplayer/',
   routes
 })
+
+
 
 // if (sessionStorage.getItem('token')) {
 //   store.commit('setToken', sessionStorage.getItem('token'))

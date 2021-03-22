@@ -8,7 +8,7 @@
       <!-- 歌单 -->
       <div class="songsList">
         <label id="hasUpload" @click="trueShowAllMusic">
-          <Has-upload @sendAllMusic="getAllMusic"></Has-upload>
+          <Has-upload  @sendAllMusic="getAllMusic"></Has-upload>
         </label>
 
         <div class="createSongsList">
@@ -56,7 +56,7 @@
             <span class="music-time">时长</span>
           </div>
           <ul class="songs-item">
-            
+            <!-- 所有歌曲 -->
             <li v-show="showAllMusic&&closeShowSearch" v-for="(item2,index2) in AllMusic" :key="index2+'yy'">
               <Music-item
                 :index="index2+1"
@@ -70,7 +70,7 @@
                 @delClick="AllMusicReload"
               ></Music-item>
             </li>
-
+            <!-- 歌单歌曲 -->
             <li v-show="!showAllMusic && closeShowSearch" v-for="(item1,index1) in DetailMusic" :key="index1">
               <Music-item
                 :index="index1+1"
@@ -84,7 +84,7 @@
                 @delClick="DetailMusicReload"
               ></Music-item>
             </li>
-
+            <!-- 搜索的歌曲 -->
             <li v-show="!closeShowSearch" v-for="(item3,index3) in SearchList" :key="index3+'y'">
               <Music-item
                 :index="index3+1"
@@ -128,6 +128,7 @@ import HeaderItem from "../components/HeaderItem";
 import CreateMusiclist from "../components/CreateMusiclist";
 import HasUpload from "../components/hasUpload";
 import settingList from "../components/settingList"
+//import index from "../components/index"
 // import HeaderAlert from "../components/HeaderAlert"
 export default {
   name: "Home",
@@ -140,6 +141,7 @@ export default {
         path: ""
       },
       musicListId: "",
+      showIndex: true,
       showAllMusic: false,
       dialogVisible: false,
       isCreateMusicList: false, //创建歌单
@@ -208,11 +210,20 @@ export default {
       
     },
     async MusicListReload() {
-      let id = this.$store.getters.getUserId;
-      let res = await axios.get(api.GetUserMusicList + id);
+      let userId = sessionStorage.getItem('userId');
+      console.log("用户ID")
+      console.log(userId)
+      console.log(api.GetUserMusicList + userId)
+      let res = await axios.get(api.GetUserMusicList + userId,{
+        headers: {
+          token: sessionStorage.getItem("token")
+        }
+      });
       console.log(res);
+      console.log("PASSWORD");
+      console.log(this.$store.state.userPassword)
       this.$store.commit("setUserMusicList", res.data.data);
-      this.UserMusicList = this.$store.getters.getUserMusicList;
+      this.UserMusicList = this.$store.state.userMusicList;
     },
     //TODO
     async AllMusicReload() {
@@ -275,6 +286,8 @@ export default {
     },
     trueShowAllMusic() {
       this.showAllMusic = true;
+      console.log(this.$refs.child)
+      //this.$refs.child.showDetailMusic();
       this.ListName = "已上传的音乐";
     },
     timeFormat(time) {
@@ -344,23 +357,34 @@ export default {
     HeaderItem,
     CreateMusiclist,
     HasUpload,
-    settingList
+    settingList,
+    //index
   },
-  async created() {
+  async mounted() {
     // let userInfo = await axios
     // let userMusicListInfo = await axios.get(api.GetUserMusicList+)
-    if (this.$store.getters.getIsLogin) {
-      let id = this.$store.getters.getUserId;
-      let res = await axios.get(api.GetUserMusicList + id);
-      // let detailMusicList = await axios.get(api.GetDetailMusic,)
-      console.log(res);
-      this.$store.commit("setUserMusicList", res.data.data);
-      this.UserMusicList = this.$store.getters.getUserMusicList;
-      this.AllMusic = this.$store.getters.getUserMusicList;
-      console.log(this.UserMusicList);
+    console.log("登录状态")
+    console.log(this.$store.state.isLogin)
+    if (this.$store.state.isLogin) {
+      this.MusicListReload();
+      let userId = this.$store.getters.getUserId;
+    console.log(userId)
+    // console.log(sessionStorage.getItem("token"))
+    if(userId != ""){
+        axios.get(api.AllMusic,{
+            headers:{
+                'token': sessionStorage.getItem("token")
+            }
+        })
+        .then(res=>{
+            this.getAllMusic(res.data.data.list)
+            
+        })
+    }
+      
     }
   },
-  async mounted() {},
+  
   computed: {
     getAllMusics(){
       return this.AllMusic;
@@ -377,6 +401,22 @@ export default {
   },
   watch: {
     
+  },
+  async created() {
+    let userId = this.$store.getters.getUserId;
+    console.log(userId)
+    // console.log(sessionStorage.getItem("token"))
+    if(userId != ""){
+        axios.get(api.AllMusic,{
+            headers:{
+                'token': sessionStorage.getItem("token")
+            }
+        })
+        .then(res=>{
+            this.getAllMusic(res.data.data.list)
+            
+        })
+    }
   },
 };
 </script>

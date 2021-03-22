@@ -15,7 +15,7 @@
         <!-- 换肤按钮 -->
         <img id="huanfu" src="../assets/img/huanfu.png" alt />
         <!-- 上传音乐 -->
-        <img id="upload" src="../assets/img/upload.png" @click="uploadAlertShow" />
+        <img id="upload" src="@/assets/img/upload.png" @click="uploadAlertShow" />
       </div>
 
       <!-- 上传音乐的弹窗 -->
@@ -130,14 +130,14 @@ export default {
     toRegister() {
       this.$router.push("/register");
     },
-    stateEvent() {
+    stateEvent() {//需要登录与在线状态转换
       this.stateCode = !this.stateCode;
     },
-    logoutEvent() {
+    logoutEvent() {//退出登录
       //this.isLogin = false;
       this.$router.go(0);
-      // this.$store.commit("setIsLogin", false);
-      // this.$store.commit("delToken");
+      //this.$store.commit("setIsLogin", false);
+      //this.$store.commit("delToken");
       this.delUserInfo();
       sessionStorage.removeItem("token");
       this.stateCode = false;
@@ -153,7 +153,7 @@ export default {
     toModifyInfo() {
       this.$router.push("/account-setting");
     },
-    uploadAlertShow() {
+    uploadAlertShow() {//上传音乐弹框
       this.dialogVisible = !this.dialogVisible;
     },
     submitUpload() {
@@ -182,7 +182,36 @@ export default {
       //           console.log(err)
       //       })
     }
-  }
+  },
+  async mounted()  {
+    if(this.$store.state.isLogin){
+      console.log("berofe")
+      let dataObj = {
+        userName: sessionStorage.getItem('userName'),
+        userPassword: sessionStorage.getItem('userPassword')
+      }
+      await axios.post(api.Login,dataObj)
+      .then(res=>{
+        console.log(res)
+        let userId = res.data.data.userId;
+        let username = res.data.data.userName;
+        //设置用户ID
+        this.$store.commit('setUserId',userId);
+        //设置用户登录状态
+        this.$store.commit('setIsLogin',true);
+        //设置用户名
+        this.$store.commit('setUserName',username);
+        //设置邮箱
+        this.$store.commit('setUserEmail',res.data.data.userEmail);
+        //设置密码
+        this.$store.commit("setUserPassword",dataObj.userPassword);
+        //设置token
+        // this.$store.commit("delToken")
+        this.$store.commit('setToken', res.headers.token);
+      })
+    }
+  },
+
 };
 </script>
 

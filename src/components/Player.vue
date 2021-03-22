@@ -1,5 +1,6 @@
 <template>
   <div id="player">
+    <add-music v-if="isShowAdd" :musicId="this.musicList[this,currentIndex].musicId" @toggleShow="falseShow"></add-music>
     <div id="player-main">
       <!-- 左部播放设置 -->
       <div class="left-control">
@@ -60,7 +61,8 @@
       <!-- 右部其他按钮 -->
       <div class="right-control">
         <!-- 收藏到歌单 -->
-        <span class="icon-folder folder"></span>
+        <span class="icon-folder folder" @click="showDialog"></span>
+        
         <!-- 列表循环 -->
         <span
           class="icon-circulation-list circulation"
@@ -106,14 +108,16 @@
 </template>
 
 <script>
+import addMusic from "./addToList"
 export default {
   props: ["musiclist", "title", "singer", "playingIndex", "path"],
   data() {
     return {
       // 是否暂停状态
       //isPause: true,
+      isShowAdd: false,
       // 当前音乐列表
-      currentIndex: "",
+      currentIndex: this.playingIndex,
       musicList: this.$store.state.currentList,
       // //测试样例
       // musicList: ["../assets/LAKEY INSPIRED - Chill Day.mp3","../assets/Queen - We Are the Champions.mp3","../assets/MT1990 - 小步的舞曲（The Minuet）.mp3"],
@@ -146,6 +150,14 @@ export default {
     };
   },
   methods: {
+    showDialog(){
+            this.isShowAdd = !this.isShowAdd;
+        },
+        
+        falseShow(){
+            console.log("hahahhahaah")
+            this.isShowAdd = false;
+        },
     togglePause() {
       const audio = document.querySelector("audio");
       if (this.$store.getters.getIsPause) {
@@ -275,8 +287,11 @@ export default {
         // });
         // 列表循环
         if (this.playCircle === 0) {
+          console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+          console.log(this.currentIndex)
           if (this.musicList[this.currentIndex + 1]) {
             this.currentMusic = this.musicList[this.currentIndex + 1];
+            this.currentIndex++;
             this.onSwitchAction();
           } else {
             this.currentMusic = this.musicList[0];
@@ -624,10 +639,16 @@ export default {
 
     // 初始化音量
     this.initVolumeProcess();
+  },
+  components:{
+    addMusic
   }
 };
 </script>
 
 <style>
 @import "../assets/css/style.css";
+.v-modal{
+  display: none;
+}
 </style>
