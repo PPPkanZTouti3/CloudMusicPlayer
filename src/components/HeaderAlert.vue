@@ -11,8 +11,14 @@
                     <input type="file" @change="getFile($event)">
                     <!-- <img id="loading" v-show="isLoading" src="../assets/img/loading.gif" alt=""> -->
                 </form>
+                
+
+                <div>音乐名称：<input class="music-input" v-model="musicName" type="text" placeholder="在这里输入音乐名称"></div>
+                <div>歌手名称：<input class="music-input" v-model="musicSinger" type="text" placeholder="在这里输入歌手名称"></div>
+                <input id="uploadByUrl" v-model="musicUrl" type="text" placeholder="在这里可以输入音乐连接进行上传">
                     <!-- <img id="loading" v-show="isLoading" src="../assets/img/loading.gif" alt="">                 -->
                 <!-- <el-progress :percentage="100" :format="format"></el-progress> -->
+
             </div>
             <div class="btn">
                 <button class="submit" @click="submitForm($event)">上传至服务器</button>
@@ -32,6 +38,9 @@ export default {
             // isLoading: false,
             type: 1,
             musicFile: "",
+            musicName: "",
+            musicSinger: "",
+            musicUrl: ""
         }
     },
     methods: {
@@ -53,30 +62,61 @@ export default {
             formData.append('type', this.type);
             formData.append('musicFile', this.musicFile);
             console.log(formData);
- 
+            
+            if(this.musicUrl !== ''){
+                let dataObj = {
+                    "musicName": this.musicName,
+                    "musicSinger": this.musicSinger,
+                    "musicPath": this.musicUrl
+                }
+                await axios.post(api.UploadByUrl, dataObj ,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                )
+                .then(function (res) {
+                    
+                    console.log(res);
+                    if(res.data.code === 201){
+                        // this.isLoading = false;
+                        alert("url上传成功")
+                        window.location.reload();
+                    }
+                    else{
+                        alert("url上传失败")
+                    }
+                
+                })
+            }
             // let config = {
               // headers: { 
               //   'Content-Type': 'multipart/form-data'
               // }
             // }
- 
-            await axios.post(api.Upload, formData,{
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(function (res) {
+            
+            if(this.musicFile !== ""){
+                await axios.post(api.Upload, formData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(function (res) {
+                    
+                    console.log(res);
+                    if(res.data.code === 201){
+                        // this.isLoading = false;
+                        alert("文件上传成功")
+                        window.location.reload();
+                    }
+                    else{
+                        alert("文件上传失败")
+                    }
                 
-                console.log(res);
-                if(res.data.code === 201){
-                    // this.isLoading = false;
-                    alert("上传成功")
-                }
-                else{
-                    alert("上传失败")
-                }
-              
-            })
+                })
+            }
+            
           }
     }
 
@@ -130,6 +170,7 @@ export default {
             }
 
             .content{
+                box-sizing: border-box;
                 flex: 1;
                 display: flex;
                 flex-direction: column;
@@ -139,6 +180,7 @@ export default {
                     // margin: 0 auto;
                     padding-left: 0.8rem;
                     width: 100%;
+                    margin-bottom: 0.1rem;
                     // cursor: pointer;
                 }
                 #loading{
@@ -150,10 +192,30 @@ export default {
                     top: 0.7rem;
                     
                 }
+
+                .music-input{
+                    width: 70%;
+                    height: 0.3rem;
+                    line-height: 0.3rem;
+                    font-size: 0.14rem;
+                    text-align: left;
+                    padding: 0;
+                    margin-bottom: 0.1rem;
+                }
+
+                #uploadByUrl{
+                    width: 60%;
+                    height: 0.3rem;
+                    line-height: 0.3rem;
+                    font-size: 0.14rem;
+                    text-align: left;
+                    padding: 0;
+                    // margin-top: 0.3rem; 
+                }
             }
 
             .btn{
-                height: 0.6rem;
+                height: 0.7rem;
                 margin-bottom: 0.1rem;
                 .submit{
                     border: none;
